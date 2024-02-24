@@ -172,6 +172,41 @@ export default class ExShoeStore extends Component {
       arrCart: cartShoeCurrent,
     });
   };
+  handleDeleteShoe = (id) =>{
+    console.log('Delete shoe', id);
+    let cartShoeCurrent = this.state.arrCart;
+    // let indexShoe = cartShoeCurrent.findIndex(
+    //   (shoe) => shoe.id == id,
+    // );
+    // if (indexShoe != -1) {
+    //   cartShoeCurrent.splice(indexShoe, 1);
+    // }
+    cartShoeCurrent = cartShoeCurrent.filter(shoe => shoe.id != id);
+    this.setState({
+      arrCart: cartShoeCurrent,
+    });
+  }
+   handleChangeQuantity = (id, status)=>{
+    let cartShoeCurrent = this.state.arrCart;
+    let indexShoe = cartShoeCurrent.findIndex(
+      (shoe) => shoe.id == id,
+    );
+    if (status == 'decrease'){
+      if (cartShoeCurrent[indexShoe].soLuong >= 1){
+        cartShoeCurrent[indexShoe].soLuong -= 1;
+      }
+    } else {
+      cartShoeCurrent[indexShoe].soLuong += 1;
+    }
+    this.setState({
+      arrCart: cartShoeCurrent,
+    });
+    if(cartShoeCurrent[indexShoe].soLuong == 0){
+      this.handleDeleteShoe(id);
+    }
+    
+
+  }
   render() {
     return (
       <div className="container">
@@ -180,7 +215,7 @@ export default class ExShoeStore extends Component {
           dataListShoe={dataListShoe}
         />
         <h3 className="mt-5">Giỏ hàng</h3>
-        <CartShoe dataCartShoe={this.state.arrCart} />
+        <CartShoe dataCartShoe={this.state.arrCart} handleDeleteShoe={this.handleDeleteShoe} handleChangeQuantity={this.handleChangeQuantity}/>
       </div>
     );
   }

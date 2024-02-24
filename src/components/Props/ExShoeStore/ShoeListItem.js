@@ -6,7 +6,7 @@ export default class ShoeListItem extends Component {
     let { dataListShoe, handleAddShoe } = this.props;
     return dataListShoe.map((shoe, index) => {
       return (
-        <div key={index} className="col-3">
+        <div key={index} className="col-12 col-md-6 col-lg-4">
           <ShoeItem handleAddShoe={handleAddShoe} shoe={shoe} />
         </div>
       );
